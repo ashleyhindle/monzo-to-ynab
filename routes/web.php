@@ -4,6 +4,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/monzo/auth', function() {
-   return view('monzo/auth');
-});
+Route::get('/monzo/auth', 'MonzoController@auth');
+
+// Exchange authorization code for an access token and refresh token
+// Hit the 'who am i' API and get the account_id and store these securely against that?
+Route::get('/monzo/redirect', 'MonzoController@redirect');
+
+// Parse incoming transaction, find YNAB OauthToken, refresh it if needed, add YNAB transaction
+Route::get('/monzo/webhook', 'MonzoController@webhook');
+
+Route::get('/ynab/auth', 'YnabController@auth');
+Route::get('/ynab/redirect', 'YnabController@redirect');
