@@ -164,7 +164,7 @@ class MonzoController extends Controller
         }
 
         $encryptedRefreshToken = encrypt($ynabRefreshToken);
-        $webhookUrl = url('/monzo/webhook');
+        $webhookUrl = url('/monzo/webhook?setupByMonzoToYnab');
 
         // Delete any existing webhook setups
         Webhook::where('monzo_account_id', $monzoChosenAccount)->delete();
@@ -218,10 +218,30 @@ class MonzoController extends Controller
 
     public function cancel(Request $request, string $account_id)
     {
+        $accessToken = $request->session()->get('monzo.access_token');
+        $expires = $request->session()->get('monzo.expires');
+
+        if ($expires < time() || !$accessToken) {
+            flash('Access token is invalid, cannot cancel webhooks, please try again', 'warning');
+
+            return redirect('/monzo/reset');
+        }
+
         // Step 1: Delete all 'webhooks' entries from MySQL for this account id
+        Webhook::where('monzo_account_id', $account_id)->delete();
+
         // Step 2: Get all monzo webhooks for this account, get the ones that are ours (how do we identify these?)
+        $monzoApi = new MonzoApi($request->session()->get('monzo.access_token'));
+        $webhooks = $monzoApi->getWebhooks($account_id, false); // TODO: Change to true
+
         // Step 3: Loop through webhooks and delete them
+        $deleted = 0;
+        foreach ($webhooks as $webhook) {
+            $deleted += $monzoApi->deleteWebhook($webhook['id']);
+        }
+
         // Step 4: Inform user, all done
+        flash('All syncing cancelled and deleted, see you around!', 'success');
 
         return redirect('/');
     }

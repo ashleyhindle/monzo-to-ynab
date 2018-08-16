@@ -54,10 +54,11 @@ class MonzoApi
      * Get webhooks for the chosen accounts.
      *
      * @param string $accountId
+     * @param bool $oursOnly - Webhooks we have setup
      * @return array
      * @throws \Exception
      */
-    public function getWebhooks(string $accountId): array
+    public function getWebhooks(string $accountId, bool $oursOnly=true): array
     {
         curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "webhooks?account_id=" . $accountId);
 
@@ -71,6 +72,12 @@ class MonzoApi
         $webhooks->filter(function ($webhook) use($accountId) {
            return $webhook['account_id'] == $accountId;
         });
+
+        if ($oursOnly) {
+            $webhooks->filter(function ($webhook) {
+                return ends_with($webhook['url'], 'setupByMonzoToYnab');
+            });
+        }
 
         return $webhooks->values()->toArray();
     }
@@ -94,5 +101,18 @@ class MonzoApi
         $webhook = json_decode($response, true)['webhook'];
 
         return $webhook['id'];
+    }
+
+    public function deleteWebhook(string $webhook_id)
+    {
+        curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "webhooks/{$webhook_id}");
+        curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+
+        $response = curl_exec($this->curl);
+        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
+            throw new \Exception('Failed to delete webhook: ' . curl_error($this->curl) . '-' . $response);
+        }
+
+        return true;
     }
 }
