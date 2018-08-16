@@ -82,7 +82,7 @@ class MonzoWebhookController extends Controller
         $transaction = $ynabApi->addTransaction(
             $webhook->ynab_budget_id,
             $webhook->ynab_account_id,
-            new DateTime($data['created']),
+            new \DateTime($data['created']),
             $data['local_amount'],
             $data['description'],
             $data['memo']
