@@ -61,8 +61,6 @@ class MonzoWebhookController extends Controller
         $type = $input['type'];
         $data = $input['data'];
 
-        Log::info($data);
-
         if ($type != 'transaction.created') {
             return 'Thank you';
         }
