@@ -91,6 +91,10 @@ class MonzoWebhookController extends Controller
             $payee = $data['merchant']['name'];
         }
 
+        if (!empty($data['counterparty']['preferred_name'])) {
+            $payee = $data['counterparty']['preferred_name'];
+        }
+
         $transaction = $ynabApi->addTransaction(
             $webhook->ynab_budget_id,
             $webhook->ynab_account_id,
