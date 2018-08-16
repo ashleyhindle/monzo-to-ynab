@@ -7,11 +7,12 @@
 @section('content')
     <div class="row">
         <h1>Choose account to sync..</h1>
-        <ul>
+
+        <ul class="list-group">
             @forelse ($accounts as $account)
-                <li><a href="/choose-account/{{ $account['id'] }}">{{ $account['description'] }}</a></li>
+                <li class="list-group-item"><a href="/choose-account/{{ $account['id'] }}">{{ $account['description'] }}</a></li>
             @empty
-                No accounts to choose from.  Something odd has happened, please go home.
+                No accounts to choose from.  Something odd has happened, please go <a href="/monzo/reset">home</a>.
             @endforelse
         </ul>
     </div>

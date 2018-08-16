@@ -100,7 +100,6 @@ class MonzoController extends Controller
             return redirect('/');
         }
 
-        dd($accounts);
         return view('monzo.choose-account', [
             'accounts' => $accounts
         ]);
