@@ -92,6 +92,8 @@ class MonzoController extends Controller
             return redirect('/'); // TODO: change to /monzo/reset
         }
 
+        $request->session()->put('monzo.accounts', $accounts);
+
         if (count($accounts) === 1) {
             // only have one account, they don't need to choose - we'll choose for them
             $request->session()->put('monzo.chosen_account.id', $accounts[0]['id']);
@@ -103,5 +105,23 @@ class MonzoController extends Controller
         return view('monzo.choose-account', [
             'accounts' => $accounts
         ]);
+    }
+
+    public function chosen(Request $request, string $account_id)
+    {
+        $accounts = $request->session()->get('monzo.accounts');
+        foreach ($accounts as $account) {
+            if ($account['id'] == $account_id) {
+                $request->session()->put('monzo.chosen_account.id', $account['id']);
+                $request->session()->put('monzo.chosen_account.description', $account['description']);
+
+                flash('Monzo account successfully chosen, YNAB now?', 'success');
+                return redirect('/');
+            }
+        }
+
+        flash('Invalid Monzo account chosen, please try again', 'warning');
+
+        return redirect('/');
     }
 }

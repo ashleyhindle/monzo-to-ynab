@@ -6,6 +6,7 @@ Route::get('/', function () {
 
 Route::get('/monzo/auth', 'MonzoController@auth');
 Route::get('/monzo/choose-account', 'MonzoController@choose');
+Route::get('/monzo/choose-account/{account_id}', 'MonzoController@chosen');
 Route::get('/monzo/reset', 'MonzoController@reset');
 
 // Exchange authorization code for an access token and refresh token
