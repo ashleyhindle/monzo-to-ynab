@@ -232,7 +232,7 @@ class MonzoController extends Controller
 
         // Step 2: Get all monzo webhooks for this account, get the ones that are ours (how do we identify these?)
         $monzoApi = new MonzoApi($request->session()->get('monzo.access_token'));
-        $webhooks = $monzoApi->getWebhooks($account_id, false); // TODO: Change to true
+        $webhooks = $monzoApi->getWebhooks($account_id, true);
 
         // Step 3: Loop through webhooks and delete them
         $deleted = 0;

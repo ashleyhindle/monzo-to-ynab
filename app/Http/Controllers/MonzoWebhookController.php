@@ -74,6 +74,7 @@ class MonzoWebhookController extends Controller
         ]);
 
         $webhook->ynab_refresh_token = encrypt($newAccessToken->getRefreshToken());
+        $webhook->count++;
         $webhook->save();
 
         $ynabApi = new YnabApi($newAccessToken->getToken());
