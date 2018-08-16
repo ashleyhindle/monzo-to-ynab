@@ -60,6 +60,9 @@ class MonzoWebhookController extends Controller
         $input = $request->input();
         $type = $input['type'];
         $data = $input['data'];
+
+        Log::info($data);
+
         if ($type != 'transaction.created') {
             return 'Thank you';
         }
@@ -84,7 +87,7 @@ class MonzoWebhookController extends Controller
             $webhook->ynab_account_id,
             new \DateTime($data['created']),
             $data['local_amount'],
-            $data['description'],
+            $data['description'] ?: "Unknown payee",
             $data['notes'] ?: ""
         );
 
