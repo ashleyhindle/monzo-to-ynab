@@ -82,13 +82,22 @@ class MonzoWebhookController extends Controller
 
         $ynabApi = new YnabApi($newAccessToken->getToken());
 
+        $payee = 'Unknown Payee';
+        if (!empty($data['description'])) {
+            $payee = $data['description'];
+        }
+
+        if (!empty($data['merchant']['name'])) {
+            $payee = $data['merchant']['name'];
+        }
+
         $transaction = $ynabApi->addTransaction(
             $webhook->ynab_budget_id,
             $webhook->ynab_account_id,
             new \DateTime($data['created']),
-            $data['local_amount'],
-            $data['description'] ?: "Unknown payee",
-            $data['notes'] ?: ""
+            $data['local_amount'] * 100,
+            $payee,
+            'Monzo to YNAB: ' . $data['notes']
         );
 
         if (!$transaction) {
