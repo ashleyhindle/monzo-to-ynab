@@ -66,14 +66,14 @@ class YnabApi
      */
     public function addTransaction(string $budgetId, string $accountId, \DateTime $date, float $amount, string $payee, string $notes='')
     {
-        $transaction = [
+        $transaction = ['transaction' => [
             'account_id' => $accountId,
             'date' => $date->format('Y-m-d H:i:s'),
             'amount' => $amount,
             'payee_name' => $payee,
             'cleared' => 'cleared',
             'memo' => $notes,
-        ];
+        ]];
 
         curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "budgets/{$budgetId}/transactions");
         curl_setopt($this->curl, CURLOPT_POST, true);
@@ -85,7 +85,7 @@ class YnabApi
 
         $response = curl_exec($this->curl);
         if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
-            throw new \Exception('Failed to register webhook: ' . curl_error($this->curl) . '-' . $response);
+            throw new \Exception('Failed to add YNAB transaction: ' . curl_error($this->curl) . '-' . $response);
         }
 
         $transaction = json_decode($response, true)['data']['transaction'];
