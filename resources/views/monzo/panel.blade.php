@@ -11,7 +11,7 @@
                 @if (session('monzo.chosen_account.id') === null)
                     <a href="/monzo/choose-account" class="btn btn-primary" style="background-color: #fc4f5a; border-color: #f3666d;">Choose Monzo Account</a>
                 @else
-                    <button disabled class="btn btn-success" title="{{ session('monzo.chosen_account.description') }}">Account chosen</button>
+                    <button disabled class="btn btn-success" title="{{ session('monzo.chosen_account.name') }}">Account chosen</button>
 
                 @endif
 

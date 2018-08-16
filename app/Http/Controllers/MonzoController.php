@@ -106,7 +106,7 @@ class MonzoController extends Controller
         if (count($accounts) === 1) {
             // only have one account, they don't need to choose - we'll choose for them
             $request->session()->put('monzo.chosen_account.id', $accounts[0]['id']);
-            $request->session()->put('monzo.chosen_account.description', $accounts[0]['description']);
+            $request->session()->put('monzo.chosen_account.name', $accounts[0]['description']);
 
             return redirect('/');
         }
@@ -128,7 +128,7 @@ class MonzoController extends Controller
         foreach ($accounts as $account) {
             if ($account['id'] == $account_id) {
                 $request->session()->put('monzo.chosen_account.id', $account['id']);
-                $request->session()->put('monzo.chosen_account.description', $account['description']);
+                $request->session()->put('monzo.chosen_account.name', $account['description']);
 
                 flash('Monzo account successfully chosen, YNAB now?', 'success');
                 return redirect('/');

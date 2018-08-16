@@ -7,23 +7,23 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class Monzo extends AbstractProvider
+class Ynab extends AbstractProvider
 {
     use BearerAuthorizationTrait;
 
     public function getBaseAuthorizationUrl()
     {
-        return 'https://auth.monzo.com/';
+        return 'https://app.youneedabudget.com/oauth/authorize';
     }
 
     public function getBaseAccessTokenUrl(array $params)
     {
-        return 'https://api.monzo.com/oauth2/token';
+        return 'https://app.youneedabudget.com/oauth/token';
     }
 
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return 'https://api.monzo.com/ping/whoami';
+        return 'https://api.youneedabudget.com/v1/user';
     }
 
     protected function getDefaultScopes()
@@ -35,8 +35,8 @@ class Monzo extends AbstractProvider
     {
         if ($response->getStatusCode() >= 400) {
             throw new IdentityProviderException(
-                $data['error'],
-                isset($data['code']) ? (int) $data['code'] : $response->getStatusCode(),
+                $response->getReasonPhrase(),
+                $response->getStatusCode(),
                 $response->getBody()
             );
         }
@@ -44,7 +44,7 @@ class Monzo extends AbstractProvider
 
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        return new MonzoUser($response);
+        return new YnabUser($response['data']['user']);
     }
 
 }

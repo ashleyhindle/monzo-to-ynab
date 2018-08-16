@@ -160,6 +160,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\OAuthMonzoServiceProvider::class,
+        App\Providers\OAuthYnabServiceProvider::class,
     ],
 
     /*

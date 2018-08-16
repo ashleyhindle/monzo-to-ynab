@@ -24,7 +24,7 @@ class MonzoApi
         curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "accounts");
 
         $response = curl_exec($this->curl);
-        if (!$response) {
+        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
             throw new \Exception('Failed to get accounts: ' . curl_error($this->curl));
         }
 
