@@ -10,7 +10,7 @@
             <h1>What a rollercoaster!</h1>
             <h4>Well, that's it. All done, dusted and sorted.</h4>
             <p>
-                Now go buy something to test it out, and if you have any issues <a href="mailto:hey@ashleyhindle.com">email me</a> and I'll probably help
+                Now go buy something to test it out, and if you have any issues <a href="mailto:monzotoynab@ashleyhindle.com">email me</a> and I'll probably help
             </p>
             <h1>Now what?</h1>
 
