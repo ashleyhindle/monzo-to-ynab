@@ -18,3 +18,11 @@ Route::get('/monzo/webhook', 'MonzoController@webhook');
 
 Route::get('/ynab/auth', 'YnabController@auth');
 Route::get('/ynab/redirect', 'YnabController@redirect');
+
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/privacy', function () {
+    return view('privacy');
+});
