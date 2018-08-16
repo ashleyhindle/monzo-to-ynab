@@ -37,9 +37,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item @if (ends_with(url()->current(), "/monzo/cancel")) active @endif">
-                    <a class="nav-link" href="/monzo/cancel">Delete old syncing setups</a>
-                </li>
                 <li class="nav-item @if (ends_with(url()->current(), "/about")) active @endif">
                     <a class="nav-link" href="/about">About</a>
                 </li>
