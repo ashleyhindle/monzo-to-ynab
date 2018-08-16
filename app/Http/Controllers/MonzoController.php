@@ -13,6 +13,7 @@ class MonzoController extends Controller
     public function reset(Request $request)
     {
         $request->session()->forget('monzo');
+        $request->session()->reflash();
 
         return redirect('/');
     }
@@ -110,6 +111,12 @@ class MonzoController extends Controller
     public function chosen(Request $request, string $account_id)
     {
         $accounts = $request->session()->get('monzo.accounts');
+        if (!$accounts) {
+            flash('You aren\'t ready to choose a Monzo account, please try again', 'warning');
+
+            return redirect('/monzo/reset');
+        }
+
         foreach ($accounts as $account) {
             if ($account['id'] == $account_id) {
                 $request->session()->put('monzo.chosen_account.id', $account['id']);

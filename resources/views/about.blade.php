@@ -1,12 +1,11 @@
 @extends ('layouts.app')
 
 @section('title')
-    Welcome!
+    About
 @endsection
 
 @section('content')
     <div class="row">
-        @include('monzo.panel')
-        @include('ynab.panel')
+        About
     </div>
 @endsection

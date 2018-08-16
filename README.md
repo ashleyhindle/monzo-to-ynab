@@ -1,5 +1,5 @@
 # TODO
-* [] Disable access logs in NGINX
+* [x] Disable access logs in NGINX - Done 2018-08-16 11:33:09
 
 # Thoughts
 
