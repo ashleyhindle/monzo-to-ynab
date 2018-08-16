@@ -49,4 +49,48 @@ class MonzoApi
             return $account['closed'] === false;
         })->values()->toArray();
     }
+
+    /**
+     * Get webhooks for the chosen accounts.
+     *
+     * @param string $accountId
+     * @return array
+     * @throws \Exception
+     */
+    public function getWebhooks(string $accountId): array
+    {
+        curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "webhooks");
+
+        $response = curl_exec($this->curl);
+        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
+            throw new \Exception('Failed to get accounts: ' . curl_error($this->curl));
+        }
+
+        $webhooks = collect(json_decode($response, true)['webhooks']);
+        $webhooks->filter(function ($webhook) use($accountId) {
+           return $webhook['account_id'] == $accountId;
+        });
+
+        return $webhooks->values()->toArray();
+    }
+
+    public function registerWebhook(string $accountId, string $url): bool
+    {
+        $data = [
+            'account_id' => $accountId,
+            'url' => $url,
+        ];
+        curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "webhooks");
+        curl_setopt($this->curl, CURLOPT_POST, true);
+        curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($data);
+
+        $response = curl_exec($this->curl);
+        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
+            throw new \Exception('Failed to get accounts: ' . curl_error($this->curl));
+        }
+
+        $webhook = collect(json_decode($response, true)['webhook']);
+
+        return $webhook;
+    }
 }

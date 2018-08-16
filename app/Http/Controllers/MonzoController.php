@@ -139,4 +139,9 @@ class MonzoController extends Controller
 
         return redirect('/');
     }
+
+    public function setupWebhook(Request $request)
+    {
+
+    }
 }
