@@ -85,7 +85,7 @@ class MonzoWebhookController extends Controller
             new \DateTime($data['created']),
             $data['local_amount'],
             $data['description'],
-            $data['notes']
+            $data['notes'] ?: ""
         );
 
         if (!$transaction) {
