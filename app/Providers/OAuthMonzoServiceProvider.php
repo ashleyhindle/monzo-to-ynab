@@ -28,7 +28,7 @@ class OAuthMonzoServiceProvider extends ServiceProvider
             return new Monzo([
                 'clientId'          => env('MONZO_CLIENT_ID'),
                 'clientSecret'      => env('MONZO_CLIENT_SECRET'),
-                'redirectUri'       => 'https://4bde6dfb.ngrok.io/monzo/redirect',//url('/monzo/redirect'),
+                'redirectUri'       => url('/monzo/redirect'),
             ]);
         });
 

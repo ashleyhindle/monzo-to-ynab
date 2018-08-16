@@ -28,7 +28,7 @@ class OAuthYnabServiceProvider extends ServiceProvider
             return new Ynab([
                 'clientId'          => env('YNAB_CLIENT_ID'),
                 'clientSecret'      => env('YNAB_CLIENT_SECRET'),
-                'redirectUri'       => 'https://4bde6dfb.ngrok.io/ynab/redirect',//url('/ynab/redirect'),
+                'redirectUri'       => url('/ynab/redirect'),
             ]);
         });
 
