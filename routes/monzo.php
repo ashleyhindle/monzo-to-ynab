@@ -14,6 +14,8 @@ Route::get('/monzo/reset-account', 'MonzoController@resetAccount');
 
 // Final step
 Route::get('/monzo/setup-webhook', 'MonzoController@setupWebhook');
+Route::get('/monzo/cancel', 'MonzoController@cancelMessage');
+Route::get('/monzo/cancel/{account_id}', 'MonzoController@cancel');
 
 // Parse incoming transaction, find YNAB OauthToken, refresh it if needed, add YNAB transaction
-Route::post('/monzo/webhook', 'MonzoController@webhook');
+Route::post('/monzo/webhook', 'MonzoWebhookController@webhook');

@@ -34,13 +34,16 @@
 
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home </a>
-                </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item @if (ends_with(url()->current(), "/monzo/cancel")) active @endif">
+                    <a class="nav-link" href="/monzo/cancel">Cancel Syncing</a>
+                </li>
+                <li class="nav-item @if (ends_with(url()->current(), "/about")) active @endif">
                     <a class="nav-link" href="/about">About</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item @if (ends_with(url()->current(), "/privacy")) active @endif">
                     <a class="nav-link" href="/privacy">Privacy</a>
                 </li>
             </ul>

@@ -22,6 +22,8 @@
                     @endif
                 </ul>
 
+                <hr />
+                <a href="/monzo/cancel/{{ session('monzo.chosen_account.id') }}" class="btn btn-sm btn-danger">Cancel syncing</a>
             @else
                 <a href="/monzo/auth" class="btn btn-primary" style="background-color: #fc4f5a; border-color: #f3666d;">Link Monzo Account</a>
             @endif

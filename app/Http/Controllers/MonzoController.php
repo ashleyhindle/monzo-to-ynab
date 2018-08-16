@@ -208,4 +208,21 @@ class MonzoController extends Controller
 
         return redirect('/done');
     }
+
+    public function cancelMessage(Request $request)
+    {
+        flash('Please link your Monzo account in the left panel, then you will be given the option to stop all syncing', 'danger');
+
+        return redirect('/');
+    }
+
+    public function cancel(Request $request, string $account_id)
+    {
+        // Step 1: Delete all 'webhooks' entries from MySQL for this account id
+        // Step 2: Get all monzo webhooks for this account, get the ones that are ours (how do we identify these?)
+        // Step 3: Loop through webhooks and delete them
+        // Step 4: Inform user, all done
+
+        return redirect('/');
+    }
 }
