@@ -78,6 +78,10 @@ class YnabApi
         curl_setopt($this->curl, CURLOPT_URL, $this->baseUrl . "budgets/{$budgetId}/transactions");
         curl_setopt($this->curl, CURLOPT_POST, true);
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, json_encode($transaction));
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer {$this->accessToken}",
+            "Content-Type: application/json"
+        ]);
 
         $response = curl_exec($this->curl);
         if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
