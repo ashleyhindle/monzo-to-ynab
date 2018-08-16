@@ -118,7 +118,7 @@ We request an email address to send any alerts to, such as the service being una
 - Setup YNAB
 - Update .env
 - Setup webserver pointing to Laravel app
-- - `sudo apt-get install php7.2-mbstring php7.2-xml php7.2-curl`
+- - `sudo apt-get install php7.2-mbstring php7.2-xml php7.2-curl php7.2-mysql`
 
 ### Monzo Setup
 
