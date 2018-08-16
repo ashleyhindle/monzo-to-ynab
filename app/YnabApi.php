@@ -84,7 +84,7 @@ class YnabApi
         ]);
 
         $response = curl_exec($this->curl);
-        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 200) {
+        if (!$response || curl_getinfo($this->curl, CURLINFO_HTTP_CODE) !== 201) {
             throw new \Exception('Failed to add YNAB transaction: ' . curl_error($this->curl) . '-' . $response);
         }
 
