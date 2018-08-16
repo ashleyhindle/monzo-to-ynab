@@ -20,7 +20,13 @@
                         <li class="list-group-item"><strong>YNAB account:</strong> {{ session('ynab.chosen_account.name') }}</li>
                     </ul>
 
-                    <a href="/monzo/setup-webook" class="mt-2 btn btn-lg btn-success">Start syncing</a>
+                    <a href="/monzo/setup-webhook" class="mt-2 btn btn-lg btn-success">Start syncing</a>
+                    @if (session('monzo.duplicate'))
+                        <div class="alert alert-primary" role="alert">
+                            You can only have one webhook per Monzo 'account' (personal or joint) on this service.
+                            Setting up this webhook for this account will overwrite your previous setup on this service, for this Monzo account.
+                        </div>
+                    @endif
                 </div>
             </div>
         @endif

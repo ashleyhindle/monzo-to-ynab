@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Monzo To YNAB - @yield('title')</title>
+    <title>Monzo to YNAB - @yield('title')</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -21,7 +21,7 @@
     <meta property="og:title" content="Monzo to YNAB Syncing">
     <meta property="og:url" content="https://monzo-to-ynab.ashleyhindle.com">
     <meta property="og:image" content="https://monzo-to-ynab.ashleyhindle.com/og-image.jpg">
-    
+
     <link href="/css/app.css" rel="stylesheet" type="text/css">
 </head>
 <body>

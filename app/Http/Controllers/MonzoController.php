@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\MonzoApi;
 use App\OAuth\Monzo;
+use App\Webhook;
 use Carbon\Carbon;
+use Illuminate\Encryption\Encrypter;
 use Illuminate\Http\Request;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
@@ -105,10 +107,7 @@ class MonzoController extends Controller
 
         if (count($accounts) === 1) {
             // only have one account, they don't need to choose - we'll choose for them
-            $request->session()->put('monzo.chosen_account.id', $accounts[0]['id']);
-            $request->session()->put('monzo.chosen_account.name', $accounts[0]['description']);
-
-            return redirect('/');
+            return redirect('/monzo/choose-account/' . $accounts[0]['id']);
         }
 
         return view('monzo.choose-account', [
@@ -124,6 +123,9 @@ class MonzoController extends Controller
 
             return redirect('/monzo/reset');
         }
+
+        $duplicate = (Webhook::where('monzo_account_id', $account_id)->count() > 0) ? true : false;
+        $request->session()->put('monzo.duplicate', $duplicate);
 
         foreach ($accounts as $account) {
             if ($account['id'] == $account_id) {
@@ -142,6 +144,68 @@ class MonzoController extends Controller
 
     public function setupWebhook(Request $request)
     {
+        $monzoChosenAccount = $request->session()->get('monzo.chosen_account.id');
+        $monzoExpired = $request->session()->get('monzo.expires') <= time();
+        $monzoAccessToken = $request->session()->get('monzo.access_token');
 
+        $ynabExpired = $request->session()->get('ynab.expires') <= time();
+        $ynabChosenBudget = $request->session()->get('ynab.chosen_budget.id');
+        $ynabChosenAccount = $request->session()->get('ynab.chosen_account.id');
+        $ynabRefreshToken = $request->session()->get('ynab.refresh_token');
+
+        $monzoOk = $monzoChosenAccount && $monzoAccessToken && !$monzoExpired;
+        $ynabOk = $ynabChosenBudget && $ynabChosenAccount && $ynabRefreshToken && !$ynabExpired;
+
+        // Something isn't setup correctly, we're not ready to setup the webhook
+        if (!$monzoOk || !$ynabOk) {
+            flash('Sorry, something isn\'t fully setup and we aren\'t ready to start syncing yet, please try again', 'warning');
+
+            return redirect('/');
+        }
+
+        $encryptedRefreshToken = encrypt($ynabRefreshToken);
+        $webhookUrl = url('/monzo/webhook');
+
+        // Delete any existing webhook setups
+        Webhook::where('monzo_account_id', $monzoChosenAccount)->delete();
+
+        $webhook = new Webhook([
+            'monzo_account_id' => $monzoChosenAccount,
+            'ynab_refresh_token' => $encryptedRefreshToken,
+            'ynab_budget_id' => $ynabChosenBudget,
+            'ynab_account_id' => $ynabChosenAccount,
+            'monzo_webhook_id' => 'not-setup',
+            'count' => 0,
+        ]);
+
+        $saved = $webhook->save();
+
+        if (!$webhook || !$saved) {
+            flash('Sorry! We failed to start syncing because of our badly behaved database', 'warning');
+
+            return redirect('/');
+        }
+
+        $monzoApi = new MonzoApi($monzoAccessToken);
+        // webhookId is MONZO's webhook_id, not our 'webhooks.id' column in MySQL
+        try {
+            $webhookId = $monzoApi->registerWebhook($monzoChosenAccount, $webhookUrl);
+        } catch (\Exception $e) {
+            $webhookId = false;
+        }
+
+        if (!$webhookId) {
+            flash('Sorry! We failed to setup the syncing magic with Monzo, please try again later', 'warning');
+            $webhook->delete();
+
+            return redirect('/');
+        }
+
+        $webhook->monzo_webhook_id = $webhookId;
+        $webhook->save();
+
+        flash('All done! Syncing will now commence, give it a try!', 'success');
+
+        return redirect('/done');
     }
 }

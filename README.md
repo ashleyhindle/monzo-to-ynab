@@ -112,6 +112,8 @@ We request an email address to send any alerts to, such as the service being una
 
 - Clone repo
 - `composer install`
+- Setup database
+- `./artisan migrate`
 - Setup Monzo Client
 - Setup YNAB
 - Update .env
