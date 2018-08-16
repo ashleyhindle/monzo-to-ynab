@@ -11,7 +11,7 @@
 
             <ul class="list-group">
                 @forelse ($accounts as $account)
-                    <li class="list-group-item"><a href="/choose-account/{{ $account['id'] }}">{{ $account['description'] }}</a></li>
+                    <li class="list-group-item"><a href="/monzo/choose-account/{{ $account['id'] }}">{{ $account['description'] }}</a></li>
                 @empty
                     No accounts to choose from.  Something odd has happened, please go <a href="/monzo/reset">home</a>.
                 @endforelse
