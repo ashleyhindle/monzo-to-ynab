@@ -46,6 +46,9 @@
                 <li class="nav-item @if (ends_with(url()->current(), "/privacy")) active @endif">
                     <a class="nav-link" href="/privacy">Privacy</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/ashleyhindle/monzo-to-ynab">GitHub</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -55,5 +58,14 @@
         @yield('content')
     </div>
 </div>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65325064-6"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-65325064-6');
+</script>
 </body>
 </html>
