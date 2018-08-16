@@ -30,6 +30,16 @@ class MonzoApi
 
         $accounts = json_decode($response, true)['accounts'];
 
+        foreach ($accounts as $key => $account) {
+            // Is this a joint account?
+            if (substr($account['type'], -5) == 'joint') {
+                foreach ($account['owners'] as $owner) {
+                    // Improve description: Joint account between user_00009DTyDkxxxxxxxx and user_000096Faxxxxxxxx => Joint account between Ashley and Sarah
+                    $accounts[$key]['description'] = str_replace($owner['user_id'], $owner['preferred_first_name'], $accounts[$key]['description']);
+                }
+            }
+        }
+
         // All accounts, not just open accounts
         if (!$openAccounts) {
             return $accounts;
@@ -37,6 +47,6 @@ class MonzoApi
 
         return collect($accounts)->filter(function ($account) {
             return $account['closed'] === false;
-        })->toArray();
+        })->values()->toArray();
     }
 }
