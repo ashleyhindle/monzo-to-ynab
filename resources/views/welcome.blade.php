@@ -5,5 +5,8 @@
 @endsection
 
 @section('content')
-    Howdy
+    <div class="row">
+        @include('monzo.panel')
+        @include('ynab.panel')
+    </div>
 @endsection

@@ -1,3 +1,6 @@
+# TODO
+* [] Disable access logs in NGINX
+
 # Thoughts
 
 When we setup the Monzo webhook URL, could we give it an encryption_key for the YNAB refresh_token which we encrypt on disk:

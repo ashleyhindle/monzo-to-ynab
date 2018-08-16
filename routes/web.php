@@ -5,6 +5,8 @@ Route::get('/', function () {
 });
 
 Route::get('/monzo/auth', 'MonzoController@auth');
+Route::get('/monzo/choose-account', 'MonzoController@choose');
+Route::get('/monzo/reset', 'MonzoController@reset');
 
 // Exchange authorization code for an access token and refresh token
 // Hit the 'who am i' API and get the account_id and store these securely against that?

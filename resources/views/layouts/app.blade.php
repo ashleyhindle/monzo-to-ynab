@@ -38,7 +38,8 @@
         </div>
     </nav>
 
-    <div class="content">
+    <div class="content pt-3">
+        @include('flash::message')
         @yield('content')
     </div>
 </div>
