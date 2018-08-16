@@ -18,6 +18,14 @@ class MonzoController extends Controller
         return redirect('/');
     }
 
+    public function resetAccount(Request $request)
+    {
+        $request->session()->forget('monzo.chosen_account');
+        $request->session()->reflash();
+
+        return redirect('/monzo/choose-account');
+    }
+
     public function auth(Request $request, Monzo $monzo)
     {
         $authUrl = $monzo->getAuthorizationUrl();
