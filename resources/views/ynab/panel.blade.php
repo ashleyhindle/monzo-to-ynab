@@ -1,4 +1,3 @@
-<div class="col-sm">
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">YNAB</h5>
@@ -41,9 +40,5 @@
                     <button disabled class="btn btn-dark" title="Cannot link until we have chosen a Monzo account">Link YNAB Account</button>
                 @endif
             @endif
-
-
         </div>
     </div>
-</div>
-

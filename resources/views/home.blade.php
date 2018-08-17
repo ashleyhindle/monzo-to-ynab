@@ -6,8 +6,12 @@
 
 @section('content')
     <div class="row">
-        @include('monzo.panel')
-        @include('ynab.panel')
+        <div class="col">
+            <div class="card-group">
+            @include('monzo.panel')
+            @include('ynab.panel')
+            </div>
+        </div>
     </div>
         @if (session('monzo.chosen_account.id') && session('monzo.expires') > time() && session('ynab.chosen_budget.id') && session('ynab.expires') > time() && session('ynab.chosen_account.id'))
             <div class="row">
