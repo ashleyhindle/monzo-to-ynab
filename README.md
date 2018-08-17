@@ -13,6 +13,15 @@ It will _not_:
 - View, log, or store your feed items
 - View, log, or store attachments (receipts generally)
 
+# Local development setup
+
+* `vagrant up`
+
+#### URLs
+
+* Main site: http://monzo-to-ynab.local
+* Horizon (Redis queue manager): http://monzo-to-ynab.local/horizon
+
 # TODO
 
 - Request email address to notify if we fail to sync (OAuth token failure/revocation)
