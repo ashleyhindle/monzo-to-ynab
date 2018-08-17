@@ -10,15 +10,15 @@
         <div class="card-footer">
         {{-- We have a YNAB access token that isn't expired --}}
         @if (session('ynab.expires') > time())
-            <button disabled class="btn btn-success" title="Already successfully authenticated with YNAB" data-toggle="tooltip" data-placement="top">Linked</button>
+            <button class="btn btn-success disabled" title="Already successfully authenticated with YNAB" data-toggle="tooltip" data-placement="top">Linked</button>
             @if (session('ynab.chosen_budget.id') === null)
                 <a href="/ynab/choose-budget" class="btn btn-dark">Choose YNAB Budget</a>
             @else
-                <button disabled class="btn btn-success" title="{{ session('ynab.chosen_budget.name') }}"> data-toggle="tooltip" data-placement="top"Budget chosen</button>
+                <button class="btn btn-success disabled" title="{{ session('ynab.chosen_budget.name') }}"> data-toggle="tooltip" data-placement="top"Budget chosen</button>
                 @if (session('ynab.chosen_account.id') === null)
                     <a href="/ynab/choose-account" class="btn btn-dark">Choose YNAB Account</a>
                 @else
-                    <button disabled class="btn btn-success" title="{{ session('ynab.chosen_account.name') }}" data-toggle="tooltip" data-placement="top">Account chosen</button>
+                    <button class="btn btn-success disabled" title="{{ session('ynab.chosen_account.name') }}" data-toggle="tooltip" data-placement="top">Account chosen</button>
                 @endif
             @endif
 
@@ -38,7 +38,7 @@
             @if (session('monzo.expires') > time() && session('monzo.chosen_account.id') !== null)
                 <a href="/ynab/auth" class="btn btn-dark">Link YNAB Account</a>
             @else
-                <button class="btn" style="background-color: #343a40; border-color: #343a40; color: #FFFFFF; cursor:not-allowed;" title="Cannot link until you have linked a Monzo account" data-toggle="tooltip" data-placement="top">Link YNAB Account</button>
+                <button class="btn btn-dark disabled" style="cursor:not-allowed;" title="Cannot link until you have linked a Monzo account" data-toggle="tooltip" data-placement="top">Link YNAB Account</button>
             @endif
         @endif
         </div>

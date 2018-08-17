@@ -7,12 +7,11 @@
     </div>
     <div class="card-footer">
     @if (session('monzo.expires') > time())
-        <button disabled class="btn btn-success" title="Already successfully authenticated with Monzo" data-toggle="tooltip" data-placement="top">Linked</button>
+        <button class="btn btn-success disabled" title="Already successfully authenticated with Monzo" data-toggle="tooltip" data-placement="top">Linked</button>
         @if (session('monzo.chosen_account.id') === null)
             <a href="/monzo/choose-account" class="btn btn-primary" style="background-color: #fc4f5a; border-color: #f3666d;">Choose Monzo Account</a>
         @else
-            <button disabled class="btn btn-success" title="{{ session('monzo.chosen_account.name') }}" data-toggle="tooltip" data-placement="top">Account chosen</button>
-
+            <button class="btn btn-success disabled" title="{{ session('monzo.chosen_account.name') }}" data-toggle="tooltip" data-placement="top">Account chosen</button>
         @endif
 
         <ul class="list-inline">
