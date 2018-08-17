@@ -13,3 +13,4 @@ yarn-error.log
 .env
 .phpunit.result.cache
 ubuntu-*log
+public/vendor
