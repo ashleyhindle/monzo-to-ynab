@@ -1,5 +1,11 @@
 <?php
 
+Route::get('/add-job', function() {
+    \App\Jobs\LogRandomString::dispatch(str_random());
+
+    return 'Thanks';
+});
+
 Route::get('/', function () {
     return view('home');
 });

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Horizon\Horizon;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceScheme('https');
+        // Force HTTPs links on production
+        if (!$this->app->environment('local')) {
+            URL::forceScheme('https');
+        }
+
+        Horizon::auth(function () {
+            return $this->app->environment('local') || !empty($_SERVER['PHP_AUTH_USER']);
+        });
     }
 
     /**
