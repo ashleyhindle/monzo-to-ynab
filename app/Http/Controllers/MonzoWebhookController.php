@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\AddYnabTransaction;
 use App\OAuth\Ynab;
 use App\Webhook;
 use App\YnabApi;
@@ -78,8 +79,6 @@ class MonzoWebhookController extends Controller
         $webhook->count++;
         $webhook->save();
 
-        $ynabApi = new YnabApi($newAccessToken->getToken());
-
         $payee = 'Unknown Payee';
         if (!empty($data['description'])) {
             $payee = $data['description'];
@@ -93,19 +92,14 @@ class MonzoWebhookController extends Controller
             $payee = $data['counterparty']['preferred_name'];
         }
 
-        $transaction = $ynabApi->addTransaction(
-            $webhook->ynab_budget_id,
-            $webhook->ynab_account_id,
-            new \DateTime($data['created']),
-            $data['local_amount']*10,
-            $payee,
-            'Monzo to YNAB: ' . $data['notes']
-        );
-
-        if (!$transaction) {
-            Log::error('Failed to add transaction to YNAB for webhook id [' . $webhook->id . ']');
-            return 'Failed to hit YNAB';
-        }
+        AddYnabTransaction::dispatch([
+            'budget_id' => $webhook->ynab_budget_id,
+            'account_id' => $webhook->ynab_account_id,
+            'date' => new \DateTime($data['created']),
+            'amount' => $data['local_amount']*10,
+            'payee' => $payee,
+            'notes' => 'Monzo to YNAB: ' . $data['notes']
+        ], $newAccessToken->getToken());
 
         return 'Thanks, perfect, sorted, done';
     }

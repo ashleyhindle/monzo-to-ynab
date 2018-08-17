@@ -69,3 +69,8 @@ service supervisor start
 
 # Fix permissions
 chmod -R g+wrx /vagrant/storage/*
+
+# Composer install
+cd /vagrant/
+composer install
+php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
