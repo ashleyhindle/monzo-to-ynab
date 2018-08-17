@@ -7,11 +7,11 @@
     </div>
     <div class="card-footer">
     @if (session('monzo.expires') > time())
-        <button disabled class="btn btn-success" title="Already successfully authenticated with Monzo">Linked</button>
+        <button disabled class="btn btn-success" title="Already successfully authenticated with Monzo" data-toggle="tooltip" data-placement="top">Linked</button>
         @if (session('monzo.chosen_account.id') === null)
             <a href="/monzo/choose-account" class="btn btn-primary" style="background-color: #fc4f5a; border-color: #f3666d;">Choose Monzo Account</a>
         @else
-            <button disabled class="btn btn-success" title="{{ session('monzo.chosen_account.name') }}">Account chosen</button>
+            <button disabled class="btn btn-success" title="{{ session('monzo.chosen_account.name') }}" data-toggle="tooltip" data-placement="top">Account chosen</button>
 
         @endif
 
@@ -23,7 +23,7 @@
         </ul>
         @if (session('monzo.chosen_account.id') && session('monzo.expires') > time())
             <hr />
-            <a href="/monzo/cancel/{{ session('monzo.chosen_account.id') }}" class="btn btn-sm btn-danger">Delete old syncing setups for this account</a>
+            <a href="/monzo/cancel/{{ session('monzo.chosen_account.id') }}" data-toggle="tooltip" data-placement="top" title="If you don't want to sync Monzo to YNAB anymore, or you want to start over" class="btn btn-sm btn-danger">Delete old syncing setups for this account</a>
         @endif
     @else
         <a href="/monzo/auth" class="btn btn-primary" style="background-color: #fc4f5a; border-color: #f3666d;">Link Monzo Account</a>

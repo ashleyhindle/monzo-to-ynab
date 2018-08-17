@@ -15,6 +15,8 @@
     <meta name="msapplication-TileColor" content="#ffc40d">
     <meta name="theme-color" content="#ffffff">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta property="og:image:height" content="1257">
     <meta property="og:image:width" content="2400">
     <meta property="og:description" content="Automatically send Monzo transactions into YNAB for easier budgeting">
@@ -23,6 +25,8 @@
     <meta property="og:image" content="https://monzo-to-ynab.ashleyhindle.com/og-image.jpg">
 
     <link href="/css/app.css" rel="stylesheet" type="text/css">
+    <script src="/js/app.js"></script>
+
 </head>
 <body>
 <div class="container">
@@ -83,11 +87,16 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65325064-6"></script>
 <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
     gtag('config', 'UA-65325064-6');
 </script>
+
 </body>
 </html>
