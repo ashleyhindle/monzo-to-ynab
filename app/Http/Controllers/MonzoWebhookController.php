@@ -98,7 +98,7 @@ class MonzoWebhookController extends Controller
             'date' => new \DateTime($data['created']),
             'amount' => $data['local_amount']*10,
             'payee' => $payee,
-            'notes' => 'Monzo to YNAB: ' . $data['notes']
+            'notes' => $data['notes'] ?: ""
         ], $newAccessToken->getToken());
 
         return 'Thanks, perfect, sorted, done';
