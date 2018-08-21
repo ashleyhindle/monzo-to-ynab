@@ -96,7 +96,7 @@ class MonzoWebhookController extends Controller
             'budget_id' => $webhook->ynab_budget_id,
             'account_id' => $webhook->ynab_account_id,
             'date' => new \DateTime($data['created']),
-            'amount' => $data['local_amount']*10,
+            'amount' => $data['amount']*10,
             'payee' => $payee,
             'notes' => $data['notes'] ?: ""
         ], $newAccessToken->getToken());
