@@ -14,7 +14,7 @@
             @if (session('ynab.chosen_budget.id') === null)
                 <a href="/ynab/choose-budget" class="btn btn-dark">Choose YNAB Budget</a>
             @else
-                <button class="btn btn-success disabled" title="{{ session('ynab.chosen_budget.name') }}"> data-toggle="tooltip" data-placement="top"Budget chosen</button>
+                <button class="btn btn-success disabled" title="{{ session('ynab.chosen_budget.name') }}" data-toggle="tooltip" data-placement="top">Budget chosen</button>
                 @if (session('ynab.chosen_account.id') === null)
                     <a href="/ynab/choose-account" class="btn btn-dark">Choose YNAB Account</a>
                 @else
