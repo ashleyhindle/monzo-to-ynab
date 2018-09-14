@@ -55,6 +55,7 @@
     </nav>
 
     <div class="content pt-3">
+	<h1>Apologies, Monzo currently doesn't allow OAuth to be used publicly for all users.  This website is on hold until that's allowed.</h1>
         @include('flash::message')
         @yield('content')
     </div>
