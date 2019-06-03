@@ -1,3 +1,9 @@
+This system isn't maintained - please use https://syncforynab.com/
+
+
+----
+
+
 # Can I just use yours?
 
 Sure - just go to https://monzo-to-ynab.ashleyhindle.com/
